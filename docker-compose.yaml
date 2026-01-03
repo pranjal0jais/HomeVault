@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  user-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: admin1234
+      MYSQL_DATABASE: users
+    ports:
+      - "3306:3306"
+    volumes:
+      - user_data:/var/lib/mysql
+
+  vendor-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: admin1234
+      MYSQL_DATABASE: vendors
+    ports:
+      - "3307:3306"
+    volumes:
+      - vendor_data:/var/lib/mysql
+
+  asset-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: admin1234
+      MYSQL_DATABASE: assets
+    ports:
+      - "3308:3306"
+    volumes:
+      - asset_data:/var/lib/mysql
+
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+volumes:
+  user_data:
+  vendor_data:
+  asset_data:
+  rabbitmq_data:

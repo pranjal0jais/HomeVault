@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        #user-service
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+          filters: [ ]
+
+        #vendor-service
+        - id: vendor-service
+          uri: lb://vendor-service
+          predicates:
+            - Path=/api/vendors/**
+
+        #asset-service
+        - id: asset-service
+          uri: lb://asset-service
+          predicates:
+            - Path=/api/assets/**
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER}
+  instance:
+    prefer-ip-address: true
+server:
+  port: 8080

@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: asset-service
+  datasource:
+    url: jdbc:mysql://${ASSET_DB_HOST:localhost}:${ASSET_DB_PORT:3308}/assets
+    username: ${ASSET_DB_USERNAME:root}
+    password: ${ASSET_DB_PASSWORD:admin1234}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:admin}
+    password: ${RABBITMQ_PASSWORD:admin}
+
+jwt:
+  secret: ${JWT_SECRET}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+
+server:
+  port: 8083
+
+cloudinary:
+  cloud_name: ${CLOUDINARY_NAME}
+  api:
+    key: ${CLOUDINARY_API_KEY}
+    secret: ${CLOUDINARY_API_SECRET}
