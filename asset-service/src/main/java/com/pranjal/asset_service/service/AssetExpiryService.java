@@ -23,7 +23,7 @@ public class AssetExpiryService {
 
     private final NotificationService notificationService;
 
-    @Scheduled(cron = "0 */1 * * * *", zone = "UTC")
+    @Scheduled(cron = "0 0 1 * * *", zone = "UTC")
     public void markAssetsAsExpired(){
         LocalDate today = LocalDate.now();
         Pageable pageable = PageRequest.of(0, BATCH_SIZE);
